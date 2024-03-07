@@ -23,36 +23,21 @@ This is a listing of every instructions:
 
 Find all the supported architectures here: [link](https://en.wikipedia.org/wiki/AES_instruction_set#Supporting_x86_CPUs)
 
-# Example program
 
-In this sample, we implement the encrypting function. 
+# Compilation
 
-```assembly
-section .text
-global aes_encrypt, aes_decrypt
-
-aes_encrypt:
-    movdqu xmm0, [rdi]
-    movdqu xmm1, [rsi]
-    pxor xmm0, xmm1
-
-    aeskeygenassist xmm1, xmm1, 0x01
-    aesenc xmm0, xmm1
-
-    aeskeygenassist xmm1, xmm1, 0x01
-    aesenc xmm0, xmm1
-
-    aeskeygenassist xmm1, xmm1, 0x01
-    aesenclast xmm0, xmm1
-
-    movdqu [rdx], xmm0
-    ret
+How to compile a program using AES-NI:
+```bash
+gcc aes-ni.c -o ./aes -maes
 ```
 
+
 # Sources:
+
+- Interesting White paper with code samples in C and assembly. Benchmark at the end. [Intel® Advanced Encryption Standard (AES) New Instructions Set by Shay Gueron](https://www.intel.com/content/dam/develop/external/us/en/documents/aes-wp-2012-09-22-v01-165683.pdf)
 
 - [Intel® Advanced Encryption Standard Instructions (AES-NI)](https://www.intel.com/content/www/us/en/developer/articles/technical/advanced-encryption-standard-instructions-aes-ni.html)
 
 - [Wikipedia - AES instruction set](https://en.wikipedia.org/wiki/AES_instruction_set)
 
-- [Assembly tutorial - AsmTutor](https://asmtutor.com/)
+- Tutorial for assembly -> [Assembly tutorial - AsmTutor](https://asmtutor.com/)
